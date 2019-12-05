@@ -15,15 +15,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="separatorColor" cocoaTouchSystemColor="lightTextColor"/>
+                        <color key="sectionIndexBackgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="entryCell" id="w91-cJ-b5T">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="entryCell" id="w91-cJ-b5T" customClass="EntryTableViewCell" customModule="Journal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="118.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="w91-cJ-b5T" id="9q8-BG-oVE">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="118.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Sdw-Vh-dN8">
+                                            <rect key="frame" x="40" y="31" width="334" height="56.5"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4Tz-j1-MhV">
+                                                    <rect key="frame" x="0.0" y="0.0" width="334" height="24"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vdr-jC-Vjw">
+                                                            <rect key="frame" x="0.0" y="0.0" width="163" height="24"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Stamp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i98-9I-psz">
+                                                            <rect key="frame" x="171" y="0.0" width="163" height="24"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tyg-uD-G0Z">
+                                                    <rect key="frame" x="0.0" y="32" width="334" height="24.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Sdw-Vh-dN8" firstAttribute="leading" secondItem="9q8-BG-oVE" secondAttribute="leadingMargin" constant="20" id="NZf-Jm-6fn"/>
+                                        <constraint firstItem="Sdw-Vh-dN8" firstAttribute="top" secondItem="9q8-BG-oVE" secondAttribute="topMargin" constant="20" id="UnE-aB-xIg"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Sdw-Vh-dN8" secondAttribute="trailing" constant="20" id="bR1-23-kgo"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Sdw-Vh-dN8" secondAttribute="bottom" constant="20" id="f9c-Fy-bzZ"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="detailLabel" destination="tyg-uD-G0Z" id="UUO-hB-8D9"/>
+                                    <outlet property="timeLabel" destination="i98-9I-psz" id="qAi-iu-kip"/>
+                                    <outlet property="titleLabel" destination="Vdr-jC-Vjw" id="mxp-gg-Kqd"/>
                                     <segue destination="O1u-pL-hbL" kind="show" identifier="viewEntrySegue" id="tn1-8B-s0f"/>
                                 </connections>
                             </tableViewCell>
@@ -71,7 +112,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                         <constraints>
                             <constraint firstItem="Zcs-PN-ta6" firstAttribute="leading" secondItem="Oqp-c2-Lvb" secondAttribute="leading" constant="20" id="1r0-X4-WHE"/>
                             <constraint firstItem="Oqp-c2-Lvb" firstAttribute="trailing" secondItem="Zcs-PN-ta6" secondAttribute="trailing" constant="20" id="dFb-rR-EK7"/>

@@ -14,6 +14,7 @@
 		BA2C0EBB23989DD30083F5CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA2C0EB923989DD30083F5CF /* LaunchScreen.storyboard */; };
 		BA2C0EC32398A0FF0083F5CF /* EntriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C0EC22398A0FF0083F5CF /* EntriesTableViewController.swift */; };
 		BA2C0EC52398A1130083F5CF /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C0EC42398A1130083F5CF /* EntryViewController.swift */; };
+		BA2C0EC72398A48A0083F5CF /* EntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C0EC62398A48A0083F5CF /* EntryTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		BA2C0EBC23989DD30083F5CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA2C0EC22398A0FF0083F5CF /* EntriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesTableViewController.swift; sourceTree = "<group>"; };
 		BA2C0EC42398A1130083F5CF /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
+		BA2C0EC62398A48A0083F5CF /* EntryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				BA2C0EAE23989DD20083F5CF /* AppDelegate.swift */,
 				BA2C0EB023989DD20083F5CF /* SceneDelegate.swift */,
 				BA2C0EB423989DD20083F5CF /* Main.storyboard */,
+				BA2C0EC62398A48A0083F5CF /* EntryTableViewCell.swift */,
 				BA2C0EC42398A1130083F5CF /* EntryViewController.swift */,
 				BA2C0EC22398A0FF0083F5CF /* EntriesTableViewController.swift */,
 				BA2C0EB723989DD30083F5CF /* Assets.xcassets */,
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA2C0EC32398A0FF0083F5CF /* EntriesTableViewController.swift in Sources */,
+				BA2C0EC72398A48A0083F5CF /* EntryTableViewCell.swift in Sources */,
 				BA2C0EC52398A1130083F5CF /* EntryViewController.swift in Sources */,
 				BA2C0EAF23989DD20083F5CF /* AppDelegate.swift in Sources */,
 				BA2C0EB123989DD20083F5CF /* SceneDelegate.swift in Sources */,
