@@ -9,16 +9,24 @@
 import UIKit
 
 class EntryViewController: UIViewController {
+    // MARK: - Outlets
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var detailTextView: UITextView!
     
+    // MARK: - Properties
+    var entry: Entry?
+    var entryController: EntryController?
+    
+    // MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
+    // MARK: - Actions
     @IBAction func saveAction(_ sender: UIBarButtonItem) {
+        
     }
     
     /*
