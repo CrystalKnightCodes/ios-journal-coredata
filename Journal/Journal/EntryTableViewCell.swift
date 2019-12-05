@@ -24,8 +24,11 @@ class EntryTableViewCell: UITableViewCell {
     // MARK: - Methods
     private func updateViews() {
         titleLabel.text = entry?.title
-        timeLabel.text = "\(String(describing: entry?.timeStamp))"
         detailLabel.text = entry?.detail
+        guard let time = entry?.timeStamp else { return}
+        timeLabel.text = String(describing: time)
+        
+        
     }
     
     

@@ -14,19 +14,38 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var detailTextView: UITextView!
     
     // MARK: - Properties
-    var entry: Entry?
+    var entry: Entry? {
+        didSet {
+            updateViews()
+        }
+    }
     var entryController: EntryController?
     
     // MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        updateViews()
+    }
+    
+    func updateViews() {
+        guard isViewLoaded else { return }
+        title = entry?.title ?? "Add Journal Entry"
+        titleTextField.text = entry?.title
+        detailTextView.text = entry?.detail
     }
     
     // MARK: - Actions
     @IBAction func saveAction(_ sender: UIBarButtonItem) {
-        
+        guard let title = titleTextField.text, !title.isEmpty,
+            let detail = detailTextView.text, !detail.isEmpty else { return }
+        if let entry = entry {
+            //let index = (entryController?.entries.firstIndex(of: entry))!
+
+            entryController?.update(entry: entry, title: title, detail: detail)
+        } else {
+            entryController?.create(title: title, detail: detail)
+        }
+        navigationController?.popViewController(animated: true)
     }
     
     /*

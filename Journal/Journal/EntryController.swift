@@ -43,17 +43,15 @@ class EntryController {
     }
     
     func create(title: String, detail: String?) {
-        let timeStamp = Date()
-        let newEntry = Entry(title: title, detail: detail, timeStamp: timeStamp)
+        let newEntry = Entry(title: title, detail: detail, timeStamp: Date())
         entries.append(newEntry)
         saveToPersistentStore()
     }
     
-    func update(newTitle: String, newDetail: String?, index: Int) {
-        entries.remove(at: index)
-        let timeStamp = Date()
-        let updatedEntry = Entry(title: newTitle, detail: newDetail, timeStamp: timeStamp)
-        entries.insert(updatedEntry, at: index)
+    func update(entry: Entry, title: String, detail: String?) {
+        entry.title = title
+        entry.detail = detail
+        entry.timeStamp = Date()
         saveToPersistentStore()
     }
     
@@ -62,10 +60,10 @@ class EntryController {
         moc.delete(entry)
         do {
             try moc.save()
-            //tableView.reloadData()
         } catch {
             moc.reset()
             print("Error savingg managed object context /(error)")
         }
+//        saveToPersistentStore()
     }
 }
