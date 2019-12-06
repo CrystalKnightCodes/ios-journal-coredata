@@ -39,7 +39,6 @@ class EntryViewController: UIViewController {
         guard let title = titleTextField.text, !title.isEmpty,
             let detail = detailTextView.text, !detail.isEmpty else { return }
         if let entry = entry {
-            //let index = (entryController?.entries.firstIndex(of: entry))!
 
             entryController?.update(entry: entry, title: title, detail: detail)
         } else {

@@ -14,6 +14,8 @@ class EntryController {
     // MARK: - Properties
     var entries: [Entry] {
         get {
+//            let entry = Entry(title: "Test", detail: "Detail", timeStamp: "This time")
+//            return [entry]
             loadFromPersistentStore()
         }
         set {
@@ -43,7 +45,7 @@ class EntryController {
     }
     
     func create(title: String, detail: String?) {
-        let newEntry = Entry(title: title, detail: detail, timeStamp: Date())
+        let newEntry = Entry(title: title, detail: detail, timeStamp: formatTime())
         entries.append(newEntry)
         saveToPersistentStore()
     }
@@ -51,7 +53,7 @@ class EntryController {
     func update(entry: Entry, title: String, detail: String?) {
         entry.title = title
         entry.detail = detail
-        entry.timeStamp = Date()
+        entry.timeStamp = formatTime()
         saveToPersistentStore()
     }
     
@@ -62,8 +64,25 @@ class EntryController {
             try moc.save()
         } catch {
             moc.reset()
-            print("Error savingg managed object context /(error)")
+            print("Error savingg managed object context \(error)")
         }
-//        saveToPersistentStore()
+    }
+    
+    func formatTime() -> String {
+        let date = Date() // 2018-10-10T10:00:00+00:00
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        let hour = calendar.component(.hour, from: date)
+        let minute = calendar.component(.minute, from: date)
+        
+        let formattedDate: String = "\(month)/\(day)/\(year)  \(hour):\(minute)"
+        return formattedDate
     }
 }
+
+
+
+
+ 
