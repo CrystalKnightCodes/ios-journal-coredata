@@ -12,14 +12,14 @@ import CoreData
 class EntryController {
     
     // MARK: - Properties
-    var entries: [Entry] {
-        get {
-            loadFromPersistentStore()
-        }
-        set {
-            saveToPersistentStore()
-        }
-    }
+//    var entries: [Entry] {
+//        get {
+//            loadFromPersistentStore()
+//        }
+//        set {
+//            saveToPersistentStore()
+//        }
+//    }
     
     //MARK: - Methods
     func saveToPersistentStore() {
@@ -31,20 +31,20 @@ class EntryController {
         }
     }
     
-    func loadFromPersistentStore() -> [Entry] {
-        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        let moc = CoreDataStack.shared.mainContext
-        do {
-            return try moc.fetch(fetchRequest)
-        } catch {
-            print("Error fetching tasks: \(error)")
-            return []
-        }
-    }
+//    func loadFromPersistentStore() -> [Entry] {
+//        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+//        let moc = CoreDataStack.shared.mainContext
+//        do {
+//            return try moc.fetch(fetchRequest)
+//        } catch {
+//            print("Error fetching tasks: \(error)")
+//            return []
+//        }
+//    }
     
     func create(title: String, mood: String, detail: String?) {
-        let newEntry = Entry(title: title, mood: mood, detail: detail, timeStamp: formatTime())
-        entries.append(newEntry)
+        let _ = Entry(title: title, mood: mood, detail: detail, timeStamp: formatTime())
+        // entries.append(newEntry)
         saveToPersistentStore()
     }
     
@@ -76,7 +76,7 @@ class EntryController {
         let hour = calendar.component(.hour, from: date)
         let minute = calendar.component(.minute, from: date)
         
-        let formattedDate: String = "\(month)/\(day)/\(year)  \(hour):\(minute)"
+        let formattedDate: String = "\(month)/\(day)  \(hour):\(minute)"
         return formattedDate
     }
 }
