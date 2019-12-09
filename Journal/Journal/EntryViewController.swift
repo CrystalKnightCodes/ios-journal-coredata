@@ -8,10 +8,17 @@
 
 import UIKit
 
+enum Mood: String, CaseIterable {
+    case happy = "🙂"
+    case neutral = "😐"
+    case sad = "🙁"
+}
+
 class EntryViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var detailTextView: UITextView!
+    @IBOutlet weak var moodSC: UISegmentedControl!
     
     // MARK: - Properties
     var entry: Entry? {
@@ -31,6 +38,17 @@ class EntryViewController: UIViewController {
         guard isViewLoaded else { return }
         title = entry?.title ?? "Add Journal Entry"
         titleTextField.text = entry?.title
+        
+        let moodString = entry?.mood
+        switch moodString {
+        case Mood.happy.rawValue:
+            moodSC.selectedSegmentIndex = 0
+        case Mood.sad.rawValue:
+            moodSC.selectedSegmentIndex = 2
+        default:
+            moodSC.selectedSegmentIndex = 1
+        }
+        
         detailTextView.text = entry?.detail
     }
     
@@ -38,23 +56,13 @@ class EntryViewController: UIViewController {
     @IBAction func saveAction(_ sender: UIBarButtonItem) {
         guard let title = titleTextField.text, !title.isEmpty,
             let detail = detailTextView.text, !detail.isEmpty else { return }
+        let moodIndex = moodSC.selectedSegmentIndex
+        let newMood = Mood.allCases[moodIndex]
         if let entry = entry {
-
-            entryController?.update(entry: entry, title: title, detail: detail)
+            entryController?.update(entry: entry, title: title, mood: newMood.rawValue, detail: detail)
         } else {
-            entryController?.create(title: title, detail: detail)
+            entryController?.create(title: title, mood: newMood.rawValue, detail: detail)
         }
         navigationController?.popViewController(animated: true)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
