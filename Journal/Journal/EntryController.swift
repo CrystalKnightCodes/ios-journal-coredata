@@ -12,40 +12,70 @@ import CoreData
 class EntryController {
     
     // MARK: - Properties
-//    var entries: [Entry] {
-//        get {
-//            loadFromPersistentStore()
-//        }
-//        set {
-//            saveToPersistentStore()
-//        }
-//    }
+    private let baseURL = URL(string: "https://ios-journal-dd938.firebaseio.com")!
+    
+    typealias CompletionHandler = (Error?) -> Void
     
     //MARK: - Methods
-    func saveToPersistentStore() {
+    func put(entry: Entry, completion: @ escaping () -> Void = { } ) {
+        let uuid = entry.identifier ?? UUID().uuidString
+        let requestURL = baseURL.appendingPathComponent(uuid).appendingPathExtension("json")
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "PUT"
+        
         do {
-            let moc = CoreDataStack.shared.mainContext
-            try moc.save()
+            guard var representation = entry.entryRepresentation else {
+                completion()
+                return
+            }
+            
+            representation.identifier = uuid
+            entry.identifier = uuid
+            try saveToPersistentStore()
+            request.httpBody = try JSONEncoder().encode(representation)
         } catch {
-            print("Error saving managed object context: \(error)")
+            print("Error encoding entry \(entry): \(error)")
+            completion()
+            return
         }
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            guard error ==  nil else {
+                print("Error puting entry to server: \(error!)")
+                completion()
+                return
+            }
+            completion()
+        }.resume()
     }
     
-//    func loadFromPersistentStore() -> [Entry] {
-//        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-//        let moc = CoreDataStack.shared.mainContext
-//        do {
-//            return try moc.fetch(fetchRequest)
-//        } catch {
-//            print("Error fetching tasks: \(error)")
-//            return []
-//        }
-//    }
+    func deleteEntryFromServer(_ entry: Entry, completion: @escaping CompletionHandler = { _ in }) {
+        guard let uuid = entry.identifier else {
+            completion(NSError())
+            return
+        }
+        
+        let requestURL = baseURL.appendingPathComponent(uuid).appendingPathExtension("json")
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "DELETE"
+        
+        URLSession.shared.dataTask(with: request) { (_, _, error) in
+            guard error == nil else {
+                print("Error deleting task: \(error!)")
+                completion(error)
+                return
+            }
+            completion(nil)
+        }.resume()
+    }
+
+    private func saveToPersistentStore() throws {
+        let moc = CoreDataStack.shared.mainContext
+        try moc.save()
+    }
     
     func create(title: String, mood: String, detail: String?) {
-        let _ = Entry(title: title, mood: mood, detail: detail, timeStamp: formatTime())
-        // entries.append(newEntry)
-        saveToPersistentStore()
+        let entry = Entry(title: title, mood: mood, detail: detail, timeStamp: formatTime())
+        put(entry: entry)
     }
     
     func update(entry: Entry, title: String, mood: String, detail: String?) {
@@ -53,30 +83,23 @@ class EntryController {
         entry.mood = mood
         entry.detail = detail
         entry.timeStamp = formatTime()
-        saveToPersistentStore()
+        put(entry: entry)
     }
     
     func delete(entry: Entry) {
-        let moc = CoreDataStack.shared.mainContext
-        moc.delete(entry)
-        do {
-            try moc.save()
-        } catch {
-            moc.reset()
-            print("Error saving managed object context \(error)")
-        }
+//        let moc = CoreDataStack.shared.mainContext
+//        moc.delete(entry)
+//        do {
+//            try moc.save()
+//        } catch {
+//            moc.reset()
+//            print("Error saving managed object context \(error)")
+//        }
+        
+        deleteEntryFromServer(entry)
     }
     
     func formatTime() -> String {
-//        let date = Date()
-//        let calendar = Calendar.current
-//        let year = calendar.component(.year, from: date)
-//        let month = calendar.component(.month, from: date)
-//        let day = calendar.component(.day, from: date)
-//        let hour = calendar.component(.hour, from: date)
-//        let minute = calendar.component(.minute, from: date)
-//
-//        let formattedDate: String = "\(month)/\(day)  \(hour):\(minute)"
         let date = Date()
         let formatter = DateFormatter()
         formatter.timeStyle = .short
