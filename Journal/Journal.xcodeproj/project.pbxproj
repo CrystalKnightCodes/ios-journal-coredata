@@ -19,6 +19,7 @@
 		BA2C0ED62398A8F50083F5CF /* Journal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BA2C0ED32398A8F50083F5CF /* Journal.xcdatamodeld */; };
 		BA2C0ED82398AA3A0083F5CF /* Entry+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C0ED72398AA3A0083F5CF /* Entry+Convenience.swift */; };
 		BA2C0EDA2398AD5D0083F5CF /* EntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C0ED92398AD5D0083F5CF /* EntryController.swift */; };
+		BA2C0EE723A089560083F5CF /* EntryRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C0EE623A089560083F5CF /* EntryRepresentation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		BA2C0ED72398AA3A0083F5CF /* Entry+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+Convenience.swift"; sourceTree = "<group>"; };
 		BA2C0ED92398AD5D0083F5CF /* EntryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "\U001bEntryController.swift"; sourceTree = "<group>"; };
 		BA2C0EDF239DE7C50083F5CF /* Journal 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Journal 2.xcdatamodel"; sourceTree = "<group>"; };
+		BA2C0EE623A089560083F5CF /* EntryRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRepresentation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				BA2C0EC82398A6210083F5CF /* CoreDataStack.swift */,
 				BA2C0ED32398A8F50083F5CF /* Journal.xcdatamodeld */,
 				BA2C0ED72398AA3A0083F5CF /* Entry+Convenience.swift */,
+				BA2C0EE623A089560083F5CF /* EntryRepresentation.swift */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA2C0ED62398A8F50083F5CF /* Journal.xcdatamodeld in Sources */,
+				BA2C0EE723A089560083F5CF /* EntryRepresentation.swift in Sources */,
 				BA2C0EC32398A0FF0083F5CF /* EntriesTableViewController.swift in Sources */,
 				BA2C0EC72398A48A0083F5CF /* EntryTableViewCell.swift in Sources */,
 				BA2C0EDA2398AD5D0083F5CF /* EntryController.swift in Sources */,

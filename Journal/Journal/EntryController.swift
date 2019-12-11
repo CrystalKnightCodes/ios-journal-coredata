@@ -68,15 +68,20 @@ class EntryController {
     }
     
     func formatTime() -> String {
-        let date = Date() 
-        let calendar = Calendar.current
-        let year = calendar.component(.year, from: date)
-        let month = calendar.component(.month, from: date)
-        let day = calendar.component(.day, from: date)
-        let hour = calendar.component(.hour, from: date)
-        let minute = calendar.component(.minute, from: date)
-        
-        let formattedDate: String = "\(month)/\(day)  \(hour):\(minute)"
+//        let date = Date()
+//        let calendar = Calendar.current
+//        let year = calendar.component(.year, from: date)
+//        let month = calendar.component(.month, from: date)
+//        let day = calendar.component(.day, from: date)
+//        let hour = calendar.component(.hour, from: date)
+//        let minute = calendar.component(.minute, from: date)
+//
+//        let formattedDate: String = "\(month)/\(day)  \(hour):\(minute)"
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .short
+        let formattedDate = formatter.string(from: date)
         return formattedDate
     }
 }
