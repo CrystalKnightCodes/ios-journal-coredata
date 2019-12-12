@@ -17,6 +17,34 @@ class EntryController {
     typealias CompletionHandler = (Error?) -> Void
     
     //MARK: - Methods
+    func fetchEntriesFromServer(completion: @escaping CompletionHandler = { _ in }) {
+        let requestURL = baseURL.appendingPathExtension("json")
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            guard error == nil else {
+                print("Error fetching entries: \(error!)")
+                completion(error)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data returned by data task.")
+                completion(NSError())
+                return
+            }
+            
+            do {
+                let entryRepresentations = Array(try JSONDecoder().decode([String : EntryRepresentation].self, from: data).values)
+                
+                try self.updateEntries(with: entryRepresentations)
+                
+                completion(nil)
+            } catch {
+                print("Error decoding entry representations: \(error)")
+            }
+        }.resume()
+    }
+    
     func put(entry: Entry, completion: @ escaping () -> Void = { } ) {
         let uuid = entry.identifier ?? UUID().uuidString
         let requestURL = baseURL.appendingPathComponent(uuid).appendingPathExtension("json")
@@ -67,7 +95,7 @@ class EntryController {
             completion(nil)
         }.resume()
     }
-
+    
     private func saveToPersistentStore() throws {
         let moc = CoreDataStack.shared.mainContext
         try moc.save()
@@ -86,16 +114,48 @@ class EntryController {
         put(entry: entry)
     }
     
-    func delete(entry: Entry) {
-//        let moc = CoreDataStack.shared.mainContext
-//        moc.delete(entry)
-//        do {
-//            try moc.save()
-//        } catch {
-//            moc.reset()
-//            print("Error saving managed object context \(error)")
-//        }
+    private func updateEntries(with representations: [EntryRepresentation]) throws {
+        let entriesWithID = representations.filter { $0.identifier != nil }
+        let identifiersToFetch = entriesWithID.compactMap { UUID(uuidString: $0.identifier) }
         
+        let representationsByID = Dictionary(uniqueKeysWithValues: zip(identifiersToFetch, entriesWithID))
+        
+        
+        var entriesToCreate = representationsByID
+        
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        let context = CoreDataStack.shared.mainContext
+        
+        do {
+            let existingEntries = try context.fetch(fetchRequest)
+            
+            for entry in existingEntries {
+                guard let id = UUID(uuidString: entry.identifier!),
+                    let representation = representationsByID[id] else {
+                        let moc = CoreDataStack.shared.mainContext
+                        moc.delete(entry)
+                        continue
+                }
+                
+                entry.title = representation.title
+                entry.detail = representation.detail
+                entry.mood = representation.mood
+                entry.timeStamp = representation.timeStamp
+                
+                entriesToCreate.removeValue(forKey: id)
+            }
+            
+            for representation in entriesToCreate.values {
+                Entry(entryRepresentation: representation, context: context)
+            }
+        } catch {
+            print ("Error fetching entries for UUIDs: \(error)")
+        }
+        
+        try saveToPersistentStore()
+    }
+    
+    func delete(entry: Entry) {
         deleteEntryFromServer(entry)
     }
     
@@ -112,4 +172,4 @@ class EntryController {
 
 
 
- 
+
